@@ -1,14 +1,10 @@
 package fr.badblock.auth.commands;
 
-import java.io.IOException;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import fr.badblock.auth.profile.IpProfilesManager;
 import fr.badblock.auth.profile.PlayerProfilesManager;
-import fr.badblock.auth.profile.ProfileIP;
-import fr.badblock.auth.profile.ProfilePlayer;
+import fr.badblock.gameapi.utils.general.Callback;
 
 public class CommandUnregister extends CommandAbstract {
 	public CommandUnregister() {
@@ -17,27 +13,18 @@ public class CommandUnregister extends CommandAbstract {
 
 	@Override
 	public void doCommand(CommandSender sender, String[] args) {
-		if(!PlayerProfilesManager.getInstance().hasProfile(args[0])){
-			sender.sendMessage(ChatColor.RED + "Le profile demandé n'existe pas !");
-		} else {
-			try {
-				ProfilePlayer player = PlayerProfilesManager.getInstance().getProfile(args[0]);
-				ProfileIP	  ip	 = IpProfilesManager.getInstance().getProfile(player.getFirstIp());
+		PlayerProfilesManager.getInstance().hasProfile(args[0], new Callback<Boolean>() {
 
-				ip.removeAccount(player.getUsername());
-
-				if(ip.getCreatedAccounts().length == 0){
-					IpProfilesManager.getInstance().getIPFile(ip.getIp()).delete();
-				} else {
-					IpProfilesManager.getInstance().saveIP(ip);
+			@Override
+			public void done(Boolean result, Throwable error) {
+				if (!result) {
+					sender.sendMessage(ChatColor.RED + "Le profile demandé n'existe pas !");
+				}else {
+					PlayerProfilesManager.getInstance().removePlayer(args[0]);
+					sender.sendMessage(ChatColor.GREEN + "Le profile a bien été supprimé !");
 				}
 
-				PlayerProfilesManager.getInstance().getPlayerFile(args[0]).delete();
-				sender.sendMessage(ChatColor.GREEN + "Le profile a bien été supprimé !");
-			} catch (IOException e) {
-				sender.sendMessage(ChatColor.RED + "Une erreur a eu lieue !");
 			}
-
-		}
+		});
 	}
 }

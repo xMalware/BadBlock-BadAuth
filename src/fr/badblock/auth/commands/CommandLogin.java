@@ -1,13 +1,15 @@
 package fr.badblock.auth.commands;
 
+import java.security.NoSuchAlgorithmException;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.badblock.auth.AuthPlugin;
 import fr.badblock.auth.Configuration;
 import fr.badblock.auth.profile.PlayerProfilesManager;
-import fr.badblock.auth.profile.ProfilePlayer;
 import fr.badblock.auth.utils.ChatUtils;
+import fr.badblock.gameapi.utils.general.Callback;
 
 public class CommandLogin extends CommandAbstract {
 	public CommandLogin() {
@@ -21,28 +23,40 @@ public class CommandLogin extends CommandAbstract {
 		if(AuthPlugin.getInstance().isLogged((Player) sender)){
 			ChatUtils.sendMessage(sender, Configuration.ALREADY_LOGGED); return;
 		}
-		
-		if(!PlayerProfilesManager.getInstance().hasProfile(sender.getName())){
-			ChatUtils.sendMessage(sender, Configuration.MESSAGE_REGISTER);
-		} else {
-			ProfilePlayer player;
-			try {
-				player = PlayerProfilesManager.getInstance().getProfile(sender.getName());
 
-				if(!AuthPlugin.getInstance().getHasher().comparePassword(player.getPassword(), password)){
-					ChatUtils.sendMessage(sender, Configuration.MESSAGE_PASSWORD);
-				} else {
-					player.update((Player) sender);
-					PlayerProfilesManager.getInstance().savePlayer(player);
-					
-					AuthPlugin.getInstance().finishAuthentification((Player) sender);
+		PlayerProfilesManager.getInstance().hasProfile(args[0], new Callback<Boolean>() {
+
+			@Override
+			public void done(Boolean result, Throwable error) {
+				if (!result) {
+					ChatUtils.sendMessage(sender, Configuration.MESSAGE_REGISTER);
+				}else{
+					try {
+						PlayerProfilesManager.getInstance().getPassword(sender.getName(), new Callback<String>() {
+
+							@Override
+							public void done(String result, Throwable error) {
+								try {
+									if(!AuthPlugin.getInstance().getHasher().comparePassword(result, password)){
+										ChatUtils.sendMessage(sender, Configuration.MESSAGE_PASSWORD);
+									}else{
+										AuthPlugin.getInstance().finishAuthentification((Player) sender);
+									}
+								} catch (NoSuchAlgorithmException e) {
+									e.printStackTrace();
+								}
+							}
+
+						});
+					} catch (Exception unused) { 
+						unused.printStackTrace();
+						return; 
+					}
 				}
-			} catch (Exception unused) { 
-				unused.printStackTrace();
-				return; }
-		}
+			}
+		});
 	}
-	
+
 	@Override
 	public void sendHelp(CommandSender sender) {
 		if(AuthPlugin.getInstance().isLogged((Player) sender)){
@@ -51,10 +65,18 @@ public class CommandLogin extends CommandAbstract {
 			} else {
 				ChatUtils.sendMessage(sender, Configuration.ALREADY_LOGGED);
 			}
-		} else if(PlayerProfilesManager.getInstance().hasProfile(sender.getName())){
-			ChatUtils.sendMessage(sender, Configuration.MESSAGE_LOGIN);
-		} else {
-			ChatUtils.sendMessage(sender, Configuration.MESSAGE_REGISTER);
+		} else{
+			PlayerProfilesManager.getInstance().hasProfile(sender.getName(), new Callback<Boolean>() {
+
+				@Override
+				public void done(Boolean result, Throwable error) {
+					if (result) {
+						ChatUtils.sendMessage(sender, Configuration.MESSAGE_LOGIN);
+					} else {
+						ChatUtils.sendMessage(sender, Configuration.MESSAGE_REGISTER);
+					}
+				}
+			});
 		}
 	}
 }

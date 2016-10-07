@@ -1,6 +1,5 @@
 package fr.badblock.auth;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -21,7 +20,6 @@ import fr.badblock.auth.commands.CommandRegister;
 import fr.badblock.auth.commands.CommandUnregister;
 import fr.badblock.auth.listeners.ConnexionListener;
 import fr.badblock.auth.listeners.ProtectionListener;
-import fr.badblock.auth.profile.IpProfilesManager;
 import fr.badblock.auth.profile.PlayerProfilesManager;
 import fr.badblock.auth.runnables.SendRunnable;
 import fr.badblock.auth.security.XAUTH;
@@ -81,8 +79,7 @@ public class AuthPlugin extends JavaPlugin {
 
 		Configuration.load(getConfig());
 
-		new PlayerProfilesManager(new File(Configuration.DATA_FOLDER));
-		new IpProfilesManager(new File(Configuration.DATA_FOLDER));
+		new PlayerProfilesManager();
 
 		getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 		getServer().getPluginManager().registerEvents(new ConnexionListener(), this);
