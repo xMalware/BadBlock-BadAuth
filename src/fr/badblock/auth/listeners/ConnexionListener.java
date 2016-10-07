@@ -1,4 +1,4 @@
-package com.lelann.auth.listeners;
+package fr.badblock.auth.listeners;
 
 import java.io.IOException;
 
@@ -9,14 +9,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import com.lelann.auth.AuthPlugin;
-import com.lelann.auth.Configuration;
-import com.lelann.auth.profile.IpProfilesManager;
-import com.lelann.auth.profile.PlayerProfilesManager;
-import com.lelann.auth.profile.ProfileIP;
-import com.lelann.auth.profile.ProfilePlayer;
-import com.lelann.auth.runnables.DisconnectRunnable;
-import com.lelann.auth.utils.ChatUtils;
+import fr.badblock.auth.AuthPlugin;
+import fr.badblock.auth.Configuration;
+import fr.badblock.auth.profile.IpProfilesManager;
+import fr.badblock.auth.profile.PlayerProfilesManager;
+import fr.badblock.auth.profile.ProfileIP;
+import fr.badblock.auth.profile.ProfilePlayer;
+import fr.badblock.auth.runnables.DisconnectRunnable;
+import fr.badblock.auth.utils.ChatUtils;
 
 public class ConnexionListener implements Listener {
 	@EventHandler

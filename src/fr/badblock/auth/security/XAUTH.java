@@ -1,4 +1,4 @@
-package com.lelann.auth.security;
+package fr.badblock.auth.security;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

@@ -1,10 +1,9 @@
-package com.lelann.auth.commands;
+package fr.badblock.auth.commands;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.lelann.auth.utils.ChatUtils;
-
+import fr.badblock.auth.utils.ChatUtils;
 import net.md_5.bungee.api.ChatColor;
 
 public abstract class CommandAbstract {

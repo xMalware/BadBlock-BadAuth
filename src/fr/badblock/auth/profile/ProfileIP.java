@@ -1,4 +1,4 @@
-package com.lelann.auth.profile;
+package fr.badblock.auth.profile;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,10 +7,9 @@ import java.io.IOException;
 
 import org.bukkit.entity.Player;
 
-import com.lelann.auth.Configuration;
-import com.lelann.auth.utils.ByteInputStream;
-import com.lelann.auth.utils.ByteOutputStream;
-
+import fr.badblock.auth.Configuration;
+import fr.badblock.auth.utils.ByteInputStream;
+import fr.badblock.auth.utils.ByteOutputStream;
 import lombok.Data;
 
 @Data public class ProfileIP {

@@ -1,4 +1,4 @@
-package com.lelann.auth.security;
+package fr.badblock.auth.security;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;

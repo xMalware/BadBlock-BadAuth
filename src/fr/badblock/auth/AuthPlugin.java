@@ -1,4 +1,4 @@
-package com.lelann.auth;
+package fr.badblock.auth;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,20 +12,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import com.lelann.auth.commands.CommandAChangepassword;
-import com.lelann.auth.commands.CommandAbstract;
-import com.lelann.auth.commands.CommandLogin;
-import com.lelann.auth.commands.CommandPChangePassword;
-import com.lelann.auth.commands.CommandRegister;
-import com.lelann.auth.commands.CommandUnregister;
-import com.lelann.auth.listeners.ConnexionListener;
-import com.lelann.auth.listeners.ProtectionListener;
-import com.lelann.auth.profile.IpProfilesManager;
-import com.lelann.auth.profile.PlayerProfilesManager;
-import com.lelann.auth.runnables.SendRunnable;
-import com.lelann.auth.security.XAUTH;
-import com.lelann.auth.utils.ChatUtils;
 
+import fr.badblock.auth.commands.CommandAChangepassword;
+import fr.badblock.auth.commands.CommandAbstract;
+import fr.badblock.auth.commands.CommandLogin;
+import fr.badblock.auth.commands.CommandPChangePassword;
+import fr.badblock.auth.commands.CommandRegister;
+import fr.badblock.auth.commands.CommandUnregister;
+import fr.badblock.auth.listeners.ConnexionListener;
+import fr.badblock.auth.listeners.ProtectionListener;
+import fr.badblock.auth.profile.IpProfilesManager;
+import fr.badblock.auth.profile.PlayerProfilesManager;
+import fr.badblock.auth.runnables.SendRunnable;
+import fr.badblock.auth.security.XAUTH;
+import fr.badblock.auth.utils.ChatUtils;
 import lombok.Getter;
 
 public class AuthPlugin extends JavaPlugin {

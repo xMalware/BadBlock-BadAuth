@@ -1,4 +1,4 @@
-package com.lelann.auth.utils;
+package fr.badblock.auth.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

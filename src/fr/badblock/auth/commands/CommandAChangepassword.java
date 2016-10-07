@@ -1,14 +1,13 @@
-package com.lelann.auth.commands;
+package fr.badblock.auth.commands;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
 import org.bukkit.command.CommandSender;
 
-import com.lelann.auth.AuthPlugin;
-import com.lelann.auth.profile.PlayerProfilesManager;
-import com.lelann.auth.profile.ProfilePlayer;
-
+import fr.badblock.auth.AuthPlugin;
+import fr.badblock.auth.profile.PlayerProfilesManager;
+import fr.badblock.auth.profile.ProfilePlayer;
 import net.md_5.bungee.api.ChatColor;
 
 public class CommandAChangepassword extends CommandAbstract {
