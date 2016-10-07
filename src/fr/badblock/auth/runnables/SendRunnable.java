@@ -1,4 +1,4 @@
-package com.lelann.auth.runnables;
+package fr.badblock.auth.runnables;
 
 import java.util.UUID;
 
@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.lelann.auth.AuthPlugin;
+import fr.badblock.auth.AuthPlugin;
 
 public class SendRunnable extends BukkitRunnable {
 	private UUID uniqueId;

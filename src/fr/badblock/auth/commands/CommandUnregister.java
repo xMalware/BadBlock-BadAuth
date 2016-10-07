@@ -1,14 +1,14 @@
-package com.lelann.auth.commands;
+package fr.badblock.auth.commands;
 
 import java.io.IOException;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import com.lelann.auth.profile.IpProfilesManager;
-import com.lelann.auth.profile.PlayerProfilesManager;
-import com.lelann.auth.profile.ProfileIP;
-import com.lelann.auth.profile.ProfilePlayer;
+import fr.badblock.auth.profile.IpProfilesManager;
+import fr.badblock.auth.profile.PlayerProfilesManager;
+import fr.badblock.auth.profile.ProfileIP;
+import fr.badblock.auth.profile.ProfilePlayer;
 
 public class CommandUnregister extends CommandAbstract {
 	public CommandUnregister() {

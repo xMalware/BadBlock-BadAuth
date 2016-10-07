@@ -1,4 +1,4 @@
-package com.lelann.auth.listeners;
+package fr.badblock.auth.listeners;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

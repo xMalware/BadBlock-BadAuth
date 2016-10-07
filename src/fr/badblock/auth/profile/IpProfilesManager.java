@@ -1,4 +1,4 @@
-package com.lelann.auth.profile;
+package fr.badblock.auth.profile;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,8 +7,7 @@ import java.io.IOException;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.lelann.auth.AuthPlugin;
-
+import fr.badblock.auth.AuthPlugin;
 import lombok.Getter;
 
 public class IpProfilesManager {

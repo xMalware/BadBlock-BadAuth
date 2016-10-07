@@ -1,4 +1,4 @@
-package com.lelann.auth;
+package fr.badblock.auth;
 
 import java.io.File;
 
