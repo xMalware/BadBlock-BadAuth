@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.badblock.auth.commands.CommandAbstract;
 import fr.badblock.auth.commands.CommandLogin;
 import fr.badblock.auth.commands.CommandRegister;
 import fr.badblock.auth.listeners.ConnexionListener;
@@ -26,7 +23,6 @@ public class AuthPlugin extends BadblockPlugin {
 	@Getter private static AuthPlugin instance;
 
 	private List<UUID> 				loggedPlayers;
-	private List<CommandAbstract> 	commands;
 	@Getter private XAUTH 			hasher;
 
 	public boolean isLogged(BadblockPlayer player){
@@ -58,7 +54,6 @@ public class AuthPlugin extends BadblockPlugin {
 
 		loggedPlayers = new ArrayList<>();
 		hasher		  = new XAUTH();
-		commands	  = new ArrayList<>();
 
 		Configuration.load(getConfig());
 
@@ -73,15 +68,5 @@ public class AuthPlugin extends BadblockPlugin {
 		new CommandLogin();
 
 		saveConfig();
-	}
-
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
-		for(CommandAbstract command : commands){
-			if(command.is(label))
-				command.executeCommand(sender, args);
-		}
-
-		return true;
 	}
 }

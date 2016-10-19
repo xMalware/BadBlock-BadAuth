@@ -7,7 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.badblock.auth.AuthPlugin;
-import fr.badblock.auth.utils.ChatUtils;
+import fr.badblock.gameapi.players.BadblockPlayer;
+import fr.badblock.gameapi.utils.general.StringUtils;
 
 public class DisconnectRunnable extends BukkitRunnable {
 	private UUID uniqueId;
@@ -20,12 +21,12 @@ public class DisconnectRunnable extends BukkitRunnable {
 	
 	@Override
 	public void run(){
-		Player player = Bukkit.getPlayer(uniqueId);
+		BadblockPlayer player = (BadblockPlayer) Bukkit.getPlayer(uniqueId);
 		
 		if(player == null) {
 			cancel();
 		} else if(time == 0) {
-			player.kickPlayer(ChatUtils.colorReplace("&cVous avez été trop long à vous connecté !"));
+			player.kickPlayer( StringUtils.join(player.getTranslatedMessage("login.too_long"), " ") );
 			cancel();
 		}
 		
