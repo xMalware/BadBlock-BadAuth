@@ -38,7 +38,7 @@ public class AuthPlugin extends BadblockPlugin {
 	}
 
 	public void finishAuthentification(BadblockPlayer player){
-		player.sendMessage("login.success");
+		player.sendTranslatedMessage("login.success");
 		
 		setLogged(player);
 		kick(player);
