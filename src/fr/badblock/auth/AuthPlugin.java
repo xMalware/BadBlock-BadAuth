@@ -64,9 +64,6 @@ public class AuthPlugin extends BadblockPlugin {
 	public void onEnable(RunType runType){
 		instance	  = this;
 
-		if(runType == RunType.LOBBY)
-			return;
-		
 		loggedPlayers = new ArrayList<>();
 		hasher		  = new XAUTH();
 		commands	  = new ArrayList<>();
