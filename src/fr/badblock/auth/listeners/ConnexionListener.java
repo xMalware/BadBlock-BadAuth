@@ -26,8 +26,14 @@ public class ConnexionListener extends BadListener {
 
 		PlayerProfilesManager.getInstance().hasProfile(badblockPlayer.getName(), new Callback<Boolean>() {
 
+			boolean has = false;
+			
 			@Override
 			public void done(Boolean result, Throwable error) {
+				if(has)
+					return;
+				has = true;
+				
 				if (!result) {
 					PlayerProfilesManager.getInstance().canCreateAccount(badblockPlayer, new Callback<Boolean>() {
 
