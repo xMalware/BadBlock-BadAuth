@@ -9,9 +9,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-
 import fr.badblock.auth.commands.CommandAChangepassword;
 import fr.badblock.auth.commands.CommandAbstract;
 import fr.badblock.auth.commands.CommandLogin;
@@ -24,6 +21,7 @@ import fr.badblock.auth.profile.PlayerProfilesManager;
 import fr.badblock.auth.runnables.SendRunnable;
 import fr.badblock.auth.security.XAUTH;
 import fr.badblock.auth.utils.ChatUtils;
+import fr.badblock.gameapi.players.BadblockPlayer;
 import lombok.Getter;
 
 public class AuthPlugin extends JavaPlugin {
@@ -62,11 +60,7 @@ public class AuthPlugin extends JavaPlugin {
 	}
 
 	public void sendPlayer(Player p) {
-		ByteArrayDataOutput out = ByteStreams.newDataOutput();
-		out.writeUTF("ConnectOther");
-		out.writeUTF(p.getName());
-		out.writeUTF("lobby");
-		p.sendPluginMessage(this, "BungeeCord", out.toByteArray());
+		((BadblockPlayer)p).sendPlayer("lobby");
 	}
 
 	@Override
@@ -81,7 +75,6 @@ public class AuthPlugin extends JavaPlugin {
 
 		new PlayerProfilesManager();
 
-		getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 		getServer().getPluginManager().registerEvents(new ConnexionListener(), this);
 		getServer().getPluginManager().registerEvents(new ProtectionListener(), this);
 

@@ -20,11 +20,24 @@ public class PlayerProfilesManager {
 	}
 
 	public void hasProfile(String player, Callback<Boolean> json){
-		GameAPI.getAPI().getLadderDatabase().getPlayerData(player, new Callback<JsonObject>() {
+		getProfile(player, new Callback<JsonObject>() {
 
 			@Override
 			public void done(JsonObject result, Throwable error) {
-				json.done(result.has("lastIp"), null); 
+				if (!result.has("loginPassword")) {
+					json.done(false, null);
+					return;
+				}
+				if (result.get("loginPassword") == null) {
+					json.done(false, null);
+					return;
+				}
+				String p = result.get("loginPassword").getAsString();
+				if (p.isEmpty()) {
+					json.done(false, null);
+					return;
+				}
+				json.done(true, null);
 			}
 
 		});

@@ -19,12 +19,11 @@ public class CommandLogin extends CommandAbstract {
 	@Override
 	public void doCommand(final CommandSender sender, String[] args) {
 		String password = args[0];
-
 		if(AuthPlugin.getInstance().isLogged((Player) sender)){
 			ChatUtils.sendMessage(sender, Configuration.ALREADY_LOGGED); return;
 		}
 
-		PlayerProfilesManager.getInstance().hasProfile(args[0], new Callback<Boolean>() {
+		PlayerProfilesManager.getInstance().hasProfile(sender.getName(), new Callback<Boolean>() {
 
 			@Override
 			public void done(Boolean result, Throwable error) {
