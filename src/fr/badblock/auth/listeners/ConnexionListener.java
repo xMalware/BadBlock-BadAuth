@@ -3,7 +3,6 @@ package fr.badblock.auth.listeners;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -12,10 +11,11 @@ import fr.badblock.auth.Configuration;
 import fr.badblock.auth.profile.PlayerProfilesManager;
 import fr.badblock.auth.runnables.DisconnectRunnable;
 import fr.badblock.auth.utils.ChatUtils;
+import fr.badblock.gameapi.BadListener;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.utils.general.Callback;
 
-public class ConnexionListener implements Listener {
+public class ConnexionListener extends BadListener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e){
 		e.setJoinMessage(null);

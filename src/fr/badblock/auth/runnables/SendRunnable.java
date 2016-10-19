@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.badblock.auth.AuthPlugin;
+import fr.badblock.gameapi.players.BadblockPlayer;
 
 public class SendRunnable extends BukkitRunnable {
 	private UUID uniqueId;
@@ -18,9 +19,10 @@ public class SendRunnable extends BukkitRunnable {
 	
 	@Override
 	public void run(){
-		Player player = Bukkit.getPlayer(uniqueId);
+		BadblockPlayer player = (BadblockPlayer) Bukkit.getPlayer(uniqueId);
 		
-		if(player == null) cancel();
-		else AuthPlugin.getInstance().sendPlayer(player);
+		if(player == null) {
+			cancel();
+		} else player.sendPlayer("lobby");
 	}
 }

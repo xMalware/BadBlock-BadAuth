@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.badblock.auth.commands.CommandAChangepassword;
 import fr.badblock.auth.commands.CommandAbstract;
@@ -16,15 +15,17 @@ import fr.badblock.auth.commands.CommandPChangePassword;
 import fr.badblock.auth.commands.CommandRegister;
 import fr.badblock.auth.commands.CommandUnregister;
 import fr.badblock.auth.listeners.ConnexionListener;
+import fr.badblock.auth.listeners.LoginMapProtector;
 import fr.badblock.auth.listeners.ProtectionListener;
 import fr.badblock.auth.profile.PlayerProfilesManager;
 import fr.badblock.auth.runnables.SendRunnable;
 import fr.badblock.auth.security.XAUTH;
 import fr.badblock.auth.utils.ChatUtils;
-import fr.badblock.gameapi.players.BadblockPlayer;
+import fr.badblock.gameapi.BadblockPlugin;
+import fr.badblock.gameapi.run.RunType;
 import lombok.Getter;
 
-public class AuthPlugin extends JavaPlugin {
+public class AuthPlugin extends BadblockPlugin {
 	@Getter private static AuthPlugin instance;
 
 	private List<UUID> 				loggedPlayers;
@@ -59,14 +60,13 @@ public class AuthPlugin extends JavaPlugin {
 		new SendRunnable(player);
 	}
 
-	public void sendPlayer(Player p) {
-		((BadblockPlayer)p).sendPlayer("lobby");
-	}
-
 	@Override
-	public void onEnable(){
+	public void onEnable(RunType runType){
 		instance	  = this;
 
+		if(runType == RunType.LOBBY)
+			return;
+		
 		loggedPlayers = new ArrayList<>();
 		hasher		  = new XAUTH();
 		commands	  = new ArrayList<>();
@@ -74,11 +74,13 @@ public class AuthPlugin extends JavaPlugin {
 		Configuration.load(getConfig());
 
 		new PlayerProfilesManager();
+		
+		getAPI().setMapProtector(new LoginMapProtector());
+		
+		new ConnexionListener();
+		new ProtectionListener();
 
-		getServer().getPluginManager().registerEvents(new ConnexionListener(), this);
-		getServer().getPluginManager().registerEvents(new ProtectionListener(), this);
-
-		commands.add(new CommandAChangepassword());
+		new CommandAChangepassword();
 		commands.add(new CommandPChangePassword());
 		commands.add(new CommandRegister());
 		commands.add(new CommandLogin());
