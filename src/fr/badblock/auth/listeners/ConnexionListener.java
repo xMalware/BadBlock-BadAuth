@@ -34,7 +34,12 @@ public class ConnexionListener implements Listener {
 						@Override
 						public void done(Boolean result, Throwable error) {
 							if (!result) {
-								badblockPlayer.kickPlayer(ChatUtils.colorReplace(Configuration.TOO_MANY_ACCOUNT));
+								Bukkit.getScheduler().runTask(AuthPlugin.getInstance(), new Runnable() {
+									@Override
+									public void run() {
+										badblockPlayer.kickPlayer(ChatUtils.colorReplace(Configuration.TOO_MANY_ACCOUNT));
+									}
+								});
 							}else{
 								ChatUtils.sendMessage(e.getPlayer(), Configuration.MESSAGE_REGISTER);
 								new DisconnectRunnable(e.getPlayer());
@@ -46,15 +51,15 @@ public class ConnexionListener implements Listener {
 					ChatUtils.sendMessage(e.getPlayer(), Configuration.MESSAGE_LOGIN);
 					new DisconnectRunnable(e.getPlayer());
 				}
-				for(Player p : Bukkit.getOnlinePlayers()){
-					if(!p.getUniqueId().equals(e.getPlayer().getUniqueId())){
-						p.hidePlayer(e.getPlayer());
-						e.getPlayer().hidePlayer(p);
-					}
-				}
 			}
 
 		});
+		for(Player p : Bukkit.getOnlinePlayers()){
+			if(!p.getUniqueId().equals(e.getPlayer().getUniqueId())){
+				p.hidePlayer(e.getPlayer());
+				e.getPlayer().hidePlayer(p);
+			}
+		}
 	}
 
 	@EventHandler
@@ -62,5 +67,5 @@ public class ConnexionListener implements Listener {
 		e.setQuitMessage(null);
 		AuthPlugin.getInstance().removeLoggedData(e.getPlayer());
 	}
-	
+
 }
