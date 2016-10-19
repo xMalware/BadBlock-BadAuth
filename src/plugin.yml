@@ -1,5 +1,5 @@
 name: BadblockAuth
-main: com.lelann.auth.AuthPlugin
+main: fr.badblock.auth.AuthPlugin
 version: 1.0.0
 authors: ['LeLanN']
 commands:
