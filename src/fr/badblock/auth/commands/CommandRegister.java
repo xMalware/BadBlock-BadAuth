@@ -8,20 +8,28 @@ import org.bukkit.entity.Player;
 import fr.badblock.auth.AuthPlugin;
 import fr.badblock.auth.Configuration;
 import fr.badblock.auth.profile.PlayerProfilesManager;
-import fr.badblock.auth.utils.ChatUtils;
+import fr.badblock.gameapi.command.AbstractCommand;
 import fr.badblock.gameapi.players.BadblockPlayer;
+import fr.badblock.gameapi.players.BadblockPlayer.GamePermission;
 import fr.badblock.gameapi.utils.general.Callback;
+import fr.badblock.gameapi.utils.i18n.TranslatableString;
 
-public class CommandRegister extends CommandAbstract {
+public class CommandRegister extends AbstractCommand {
 	public CommandRegister() {
-		super(false, Configuration.MESSAGE_REGISTER, 2, "register", "reg");
+		super("register", new TranslatableString("login.login.message"), GamePermission.PLAYER, "reg");
+		allowConsole(false);
 	}
 
 	@Override
-	public void doCommand(final CommandSender sender, String[] args) {
+	public boolean executeCommand(final CommandSender sender, String[] args) {
+		if(args.length < 2)
+			return false;
 
-		if(AuthPlugin.getInstance().isLogged((Player) sender)){
-			ChatUtils.sendMessage(sender, Configuration.ALREADY_LOGGED); return;
+		BadblockPlayer player = (BadblockPlayer) sender;
+
+		if(AuthPlugin.getInstance().isLogged(player)){
+			player.sendTranslatedMessage("login.login.bad_password");
+			return true;
 		}
 
 		PlayerProfilesManager.getInstance().hasProfile(sender.getName(), new Callback<Boolean>() {
@@ -30,11 +38,11 @@ public class CommandRegister extends CommandAbstract {
 			public void done(Boolean result, Throwable error) {
 				String password = args[0];
 				if (result) {
-					ChatUtils.sendMessage(sender, Configuration.MESSAGE_LOGIN);
+					player.sendTranslatedMessage("login.login.message");
 				} else if(!password.equals(args[1])){
-					ChatUtils.sendMessage(sender, Configuration.MESSAGE_NOT_SAME);
+					player.sendTranslatedMessage("login.register.not_same");
 				} else if(password.length() < Configuration.MIN_PASSWORD_SIZE){
-					ChatUtils.sendMessage(sender, Configuration.MESSAGE_TOO_SHORT);
+					player.sendTranslatedMessage("login.register.too_short");
 				} else {
 					try {
 						password = AuthPlugin.getInstance().getHasher().getHash(password);
@@ -45,28 +53,30 @@ public class CommandRegister extends CommandAbstract {
 						@Override
 						public void done(Boolean result, Throwable error) {
 							if (!result) {
-								ChatUtils.sendMessage(sender, Configuration.TOO_MANY_ACCOUNT); return;
-							}else{
+								player.sendTranslatedMessage("login.too_many_account");
+							} else{
 								PlayerProfilesManager.getInstance().savePlayer(sender.getName(), finalPassword);
-								AuthPlugin.getInstance().finishAuthentification((Player) sender);
+								AuthPlugin.getInstance().finishAuthentification(player);
 							}
 						}
 					});
 				}
 			}
 		});
+		
+		return true;
 	}
 
 	@Override
-	public void sendHelp(CommandSender sender) {
+	public void sendUsage(CommandSender sender) {
 		PlayerProfilesManager.getInstance().hasProfile(sender.getName(), new Callback<Boolean>() {
 
 			@Override
 			public void done(Boolean result, Throwable error) {
 				if (result) {
-					ChatUtils.sendMessage(sender, Configuration.MESSAGE_LOGIN);
+					new TranslatableString("login.login.message").send(sender);
 				} else {
-					ChatUtils.sendMessage(sender, Configuration.MESSAGE_REGISTER);
+					new TranslatableString("login.register.message").send(sender);
 				}
 			}
 		});

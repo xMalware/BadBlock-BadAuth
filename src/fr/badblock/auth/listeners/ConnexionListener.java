@@ -10,10 +10,10 @@ import fr.badblock.auth.AuthPlugin;
 import fr.badblock.auth.Configuration;
 import fr.badblock.auth.profile.PlayerProfilesManager;
 import fr.badblock.auth.runnables.DisconnectRunnable;
-import fr.badblock.auth.utils.ChatUtils;
 import fr.badblock.gameapi.BadListener;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.utils.general.Callback;
+import fr.badblock.gameapi.utils.general.StringUtils;
 
 public class ConnexionListener extends BadListener {
 	@EventHandler
@@ -43,18 +43,18 @@ public class ConnexionListener extends BadListener {
 								Bukkit.getScheduler().runTask(AuthPlugin.getInstance(), new Runnable() {
 									@Override
 									public void run() {
-										badblockPlayer.kickPlayer(ChatUtils.colorReplace(Configuration.TOO_MANY_ACCOUNT));
+										badblockPlayer.kickPlayer( StringUtils.join( badblockPlayer.getTranslatedMessage("login.too_many_account"), "\n" ) );
 									}
 								});
 							}else{
-								ChatUtils.sendMessage(e.getPlayer(), Configuration.MESSAGE_REGISTER);
+								badblockPlayer.sendTranslatedMessage("login.register.message");
 								new DisconnectRunnable(e.getPlayer());
 							}
 						}
 
 					});
 				}else{
-					ChatUtils.sendMessage(e.getPlayer(), Configuration.MESSAGE_LOGIN);
+					badblockPlayer.sendTranslatedMessage("login.login.message");
 					new DisconnectRunnable(e.getPlayer());
 				}
 			}
@@ -71,7 +71,7 @@ public class ConnexionListener extends BadListener {
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e){
 		e.setQuitMessage(null);
-		AuthPlugin.getInstance().removeLoggedData(e.getPlayer());
+		AuthPlugin.getInstance().removeLoggedData((BadblockPlayer) e.getPlayer());
 	}
 
 }

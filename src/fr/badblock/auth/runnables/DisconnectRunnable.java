@@ -7,12 +7,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.badblock.auth.AuthPlugin;
-import fr.badblock.auth.Configuration;
 import fr.badblock.auth.utils.ChatUtils;
 
 public class DisconnectRunnable extends BukkitRunnable {
 	private UUID uniqueId;
-	private int time = Configuration.CHANGE_PASSWORD ? 120 : 60;
+	private int time = 60;
 	
 	public DisconnectRunnable(Player player){
 		this.uniqueId = player.getUniqueId();
@@ -26,11 +25,7 @@ public class DisconnectRunnable extends BukkitRunnable {
 		if(player == null) {
 			cancel();
 		} else if(time == 0) {
-			if(Configuration.CHANGE_PASSWORD){
-				AuthPlugin.getInstance().kick(player);
-			} else {
-				player.kickPlayer(ChatUtils.colorReplace("&cVous avez été trop long à vous connecté !"));
-			}
+			player.kickPlayer(ChatUtils.colorReplace("&cVous avez été trop long à vous connecté !"));
 			cancel();
 		}
 		

@@ -2,19 +2,3 @@ name: BadblockAuth
 main: fr.badblock.auth.AuthPlugin
 version: 1.0.0
 authors: ['LeLanN']
-commands:
-    register:
-        description: Register
-        usage: /register <pass> <pass>
-        aliases: [reg]
-    login:
-        description: Login
-        usage: /login <pass>
-        aliases: [login, log, l]
-    changepassword:
-        description: Change password (for players)
-        usage: /changepassword <pass> <pass>
-        aliases: [changepw, cpw]
-    unregister:
-        description: Unregister
-        usage: /unregister <player>
