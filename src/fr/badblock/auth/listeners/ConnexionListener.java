@@ -24,7 +24,7 @@ public class ConnexionListener extends BadListener {
 		BadblockPlayer badblockPlayer = (BadblockPlayer) e.getPlayer();
 
 
-		badblockPlayer.sendTranslatedTitle("login.welcome");
+		badblockPlayer.sendTranslatedTitle("login.welcome", badblockPlayer.getName());
 		
 		PlayerProfilesManager.getInstance().hasProfile(badblockPlayer.getName(), new Callback<Boolean>() {
 
