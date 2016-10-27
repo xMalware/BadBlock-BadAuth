@@ -16,7 +16,7 @@ import fr.badblock.gameapi.utils.i18n.TranslatableString;
 
 public class CommandRegister extends AbstractCommand {
 	public CommandRegister() {
-		super("register", new TranslatableString("login.login.message"), GamePermission.PLAYER, "reg");
+		super("register", new TranslatableString("login.login.message"), GamePermission.PLAYER, GamePermission.PLAYER, GamePermission.PLAYER, "reg");
 		allowConsole(false);
 	}
 

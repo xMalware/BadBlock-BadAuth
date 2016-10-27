@@ -14,7 +14,7 @@ import fr.badblock.gameapi.utils.i18n.TranslatableString;
 
 public class CommandLogin extends AbstractCommand {
 	public CommandLogin() {
-		super("login", new TranslatableString("login.login.message"), GamePermission.PLAYER, "log", "l");
+		super("login", new TranslatableString("login.login.message"), GamePermission.PLAYER, GamePermission.PLAYER, GamePermission.PLAYER, "log", "l");
 		allowConsole(false);
 	}
 
