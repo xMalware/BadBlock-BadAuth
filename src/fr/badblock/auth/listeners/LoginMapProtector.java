@@ -186,4 +186,9 @@ public class LoginMapProtector implements MapProtector {
 		return false;
 	}
 
+	@Override
+	public boolean canEntityBeingDamaged(Entity entity, BadblockPlayer badblockPlayer) {
+		return false;
+	}
+
 }
