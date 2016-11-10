@@ -24,6 +24,7 @@ public class AuthPlugin extends BadblockPlugin {
 
 	private List<UUID> 				loggedPlayers;
 	@Getter private XAUTH 			hasher;
+	@Getter private long			startTime;
 
 	public boolean isLogged(BadblockPlayer player){
 		return loggedPlayers.contains(player.getUniqueId());
@@ -54,7 +55,8 @@ public class AuthPlugin extends BadblockPlugin {
 
 		loggedPlayers = new ArrayList<>();
 		hasher		  = new XAUTH();
-
+		startTime	  = System.currentTimeMillis();
+		
 		Configuration.load(getConfig());
 
 		new PlayerProfilesManager();

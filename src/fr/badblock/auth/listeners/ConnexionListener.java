@@ -14,6 +14,7 @@ import fr.badblock.gameapi.BadListener;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.utils.general.Callback;
 import fr.badblock.gameapi.utils.general.StringUtils;
+import fr.badblock.gameapi.utils.threading.TaskManager;
 
 public class ConnexionListener extends BadListener {
 	@EventHandler
@@ -74,7 +75,20 @@ public class ConnexionListener extends BadListener {
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e){
 		e.setQuitMessage(null);
-		AuthPlugin.getInstance().removeLoggedData((BadblockPlayer) e.getPlayer());
+		AuthPlugin main = AuthPlugin.getInstance();
+		main.removeLoggedData((BadblockPlayer) e.getPlayer());
+		TaskManager.runTaskLater(new Runnable() {
+			@Override
+			public void run() {
+				if (main.getServer().getOnlinePlayers().size() == 0) {
+					long maxTime = main.getStartTime() + (Configuration.MAX_TIME_OPEN * 1000L);
+					if (System.currentTimeMillis() >= maxTime) {
+						main.getServer().getConsoleSender().sendMessage("§b[AuthPlugin] I need to reboot NOW.");
+						main.getServer().shutdown();
+					}
+				}
+			}
+		}, 1);
 	}
 
 }

@@ -11,6 +11,7 @@ public class Configuration {
 
 	public static int 		MAX_ACCOUNT 		= 2;
 	public static int		MIN_PASSWORD_SIZE   = 6;
+	public static int		MAX_TIME_OPEN		= 7200;
 	
 	public static String	DATA_FOLDER			= new File("data").getAbsolutePath();
 
@@ -19,6 +20,7 @@ public class Configuration {
 		MIN_PASSWORD_SIZE 	= get(config, "MIN_PASSWORD_SIZE", MIN_PASSWORD_SIZE);
 
 		DATA_FOLDER 		= get(config, "DATA_FOLDER", DATA_FOLDER);
+		MAX_TIME_OPEN 		= get(config, "MAX_TIME_OPEN", 7200);
 
 		if(!config.contains("SPAWN")){
 			config.set("SPAWN.world", SPAWN.getWorld().getName());
