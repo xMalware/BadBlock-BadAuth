@@ -1,4 +1,4 @@
-package fr.badblock.auth.listeners;
+package fr.badblock.bukkit.auth.listeners;
 
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;

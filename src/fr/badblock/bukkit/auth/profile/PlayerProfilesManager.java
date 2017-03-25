@@ -1,10 +1,10 @@
-package fr.badblock.auth.profile;
+package fr.badblock.bukkit.auth.profile;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-import fr.badblock.auth.Configuration;
+import fr.badblock.bukkit.auth.Configuration;
 import fr.badblock.gameapi.GameAPI;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.utils.general.Callback;

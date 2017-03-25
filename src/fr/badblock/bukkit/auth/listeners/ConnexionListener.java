@@ -1,4 +1,4 @@
-package fr.badblock.auth.listeners;
+package fr.badblock.bukkit.auth.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -6,10 +6,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import fr.badblock.auth.AuthPlugin;
-import fr.badblock.auth.Configuration;
-import fr.badblock.auth.profile.PlayerProfilesManager;
-import fr.badblock.auth.runnables.DisconnectRunnable;
+import fr.badblock.bukkit.auth.AuthPlugin;
+import fr.badblock.bukkit.auth.Configuration;
+import fr.badblock.bukkit.auth.profile.PlayerProfilesManager;
+import fr.badblock.bukkit.auth.runnables.DisconnectRunnable;
 import fr.badblock.gameapi.BadListener;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.utils.general.Callback;

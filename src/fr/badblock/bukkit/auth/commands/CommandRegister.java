@@ -1,13 +1,13 @@
-package fr.badblock.auth.commands;
+package fr.badblock.bukkit.auth.commands;
 
 import java.security.NoSuchAlgorithmException;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.badblock.auth.AuthPlugin;
-import fr.badblock.auth.Configuration;
-import fr.badblock.auth.profile.PlayerProfilesManager;
+import fr.badblock.bukkit.auth.AuthPlugin;
+import fr.badblock.bukkit.auth.Configuration;
+import fr.badblock.bukkit.auth.profile.PlayerProfilesManager;
 import fr.badblock.gameapi.command.AbstractCommand;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.players.BadblockPlayer.GamePermission;

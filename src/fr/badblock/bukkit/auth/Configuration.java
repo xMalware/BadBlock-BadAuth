@@ -1,4 +1,4 @@
-package fr.badblock.auth;
+package fr.badblock.bukkit.auth;
 
 import java.io.File;
 

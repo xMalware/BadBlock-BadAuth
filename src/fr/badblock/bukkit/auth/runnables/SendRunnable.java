@@ -1,4 +1,4 @@
-package fr.badblock.auth.runnables;
+package fr.badblock.bukkit.auth.runnables;
 
 import java.util.UUID;
 
@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.badblock.auth.AuthPlugin;
+import fr.badblock.bukkit.auth.AuthPlugin;
 import fr.badblock.gameapi.players.BadblockPlayer;
 
 public class SendRunnable extends BukkitRunnable {

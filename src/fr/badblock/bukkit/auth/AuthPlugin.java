@@ -1,4 +1,4 @@
-package fr.badblock.auth;
+package fr.badblock.bukkit.auth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,14 +6,14 @@ import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
-import fr.badblock.auth.commands.CommandLogin;
-import fr.badblock.auth.commands.CommandRegister;
-import fr.badblock.auth.listeners.ConnexionListener;
-import fr.badblock.auth.listeners.LoginMapProtector;
-import fr.badblock.auth.listeners.ProtectionListener;
-import fr.badblock.auth.profile.PlayerProfilesManager;
-import fr.badblock.auth.runnables.SendRunnable;
-import fr.badblock.auth.security.XAUTH;
+import fr.badblock.bukkit.auth.commands.CommandLogin;
+import fr.badblock.bukkit.auth.commands.CommandRegister;
+import fr.badblock.bukkit.auth.listeners.ConnexionListener;
+import fr.badblock.bukkit.auth.listeners.LoginMapProtector;
+import fr.badblock.bukkit.auth.listeners.ProtectionListener;
+import fr.badblock.bukkit.auth.profile.PlayerProfilesManager;
+import fr.badblock.bukkit.auth.runnables.SendRunnable;
+import fr.badblock.bukkit.auth.security.XAUTH;
 import fr.badblock.gameapi.BadblockPlugin;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.run.RunType;

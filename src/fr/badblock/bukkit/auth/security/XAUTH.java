@@ -1,4 +1,4 @@
-package fr.badblock.auth.security;
+package fr.badblock.bukkit.auth.security;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
