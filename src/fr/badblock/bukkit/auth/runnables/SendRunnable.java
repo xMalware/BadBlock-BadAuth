@@ -12,7 +12,7 @@ public class SendRunnable extends BukkitRunnable {
 	
 	public SendRunnable(Player bukkitPlayer){
 		this.bukkitPlayer = bukkitPlayer;
-		runTaskTimer(AuthPlugin.getInstance(), 20L, 60L);
+		runTaskTimer(AuthPlugin.getInstance(), 0L, 60L);
 	}
 	
 	@Override
