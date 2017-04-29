@@ -41,9 +41,11 @@ public class AuthPlugin extends BadblockPlugin {
 
 	public void removeLoggedData(BadblockPlayer player){
 		loggedPlayers.remove(player.getUniqueId());
+		semiAuthPlayers.remove(player.getUniqueId());
 	}
 
 	public void finishAuthentification(BadblockPlayer player) {
+		if (semiAuthPlayers.containsKey(player.getUniqueId())) return;
 		PlayerProfilesManager.getInstance().getAuthKey(player.getName(), new Callback<String>() {
 
 			@Override
@@ -51,6 +53,7 @@ public class AuthPlugin extends BadblockPlugin {
 				if (string == null || string.isEmpty()) {
 					kickAuth(player, false);
 				}else{
+					if (semiAuthPlayers.containsKey(player.getUniqueId())) return;
 					semiAuthPlayers.put(player.getUniqueId(), string);
 					player.sendTranslatedMessage("login.please_now_type_double_auth");
 				}
@@ -60,9 +63,10 @@ public class AuthPlugin extends BadblockPlugin {
 	}
 	
 	public void kickAuth(BadblockPlayer player, boolean googleAuth) {
-		player.sendTranslatedMessage("login.success");
-		if (!googleAuth) 
+		if (!googleAuth) {
+			player.sendTranslatedMessage("login.success");
 			player.sendTranslatedMessage("login.you_can_enable_auth");
+		}
 		setLogged(player);
 		kick(player);
 	}
