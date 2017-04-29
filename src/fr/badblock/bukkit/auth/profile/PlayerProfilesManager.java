@@ -61,6 +61,21 @@ public class PlayerProfilesManager {
 
 		});
 	}
+	
+	public void getAuthKey(String player, Callback<String> callback) {
+		getProfile(player, new Callback<JsonObject>() {
+
+			@Override
+			public void done(JsonObject result, Throwable error) {
+				if (!result.has("authKey")) {
+					callback.done(null, null);
+					return;
+				}
+				callback.done(result.get("authKey").getAsString(), null);
+			}
+
+		});
+	}
 
 	public void savePlayer(BadblockPlayer player, String password) {
 		JsonObject object = new JsonObject();
