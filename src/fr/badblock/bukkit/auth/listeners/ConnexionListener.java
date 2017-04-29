@@ -30,6 +30,7 @@ public class ConnexionListener extends BadListener {
 			@Override
 			public void done(Boolean onlineMode, Throwable throwable) {
 				boolean bool = onlineMode.booleanValue();
+				System.out.println(badblockPlayer.getName() + " / " + bool);
 				if (bool) {
 					/*PlayerProfilesManager.getInstance().getAuthKey(badblockPlayer.getName(), new Callback<String>() {
 						@Override

@@ -72,7 +72,7 @@ public class PlayerProfilesManager {
 					callback.done(false, null);
 					return;
 				}
-				callback.done(result.get("onlineMode").getAsBoolean(), null);
+				callback.done(Boolean.parseBoolean(result.get("onlineMode").getAsString()), null);
 			}
 
 		});
