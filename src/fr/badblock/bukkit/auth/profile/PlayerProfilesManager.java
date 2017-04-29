@@ -62,6 +62,22 @@ public class PlayerProfilesManager {
 		});
 	}
 	
+	public void isOnline(String player, Callback<Boolean> callback) {
+		getProfile(player, new Callback<JsonObject>() {
+
+			@Override
+			public void done(JsonObject result, Throwable error) {
+				if (!result.has("onlineMode")) {
+					// default is: false
+					callback.done(false, null);
+					return;
+				}
+				callback.done(result.get("onlineMode").getAsBoolean(), null);
+			}
+
+		});
+	}
+	
 	public void getAuthKey(String player, Callback<String> callback) {
 		getProfile(player, new Callback<JsonObject>() {
 

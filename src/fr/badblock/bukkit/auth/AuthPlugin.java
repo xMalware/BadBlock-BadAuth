@@ -43,7 +43,7 @@ public class AuthPlugin extends BadblockPlugin {
 		loggedPlayers.remove(player.getUniqueId());
 	}
 
-	public void finishAuthentification(BadblockPlayer player){
+	public void finishAuthentification(BadblockPlayer player) {
 		PlayerProfilesManager.getInstance().getAuthKey(player.getName(), new Callback<String>() {
 
 			@Override

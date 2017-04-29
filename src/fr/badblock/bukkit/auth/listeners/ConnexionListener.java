@@ -25,9 +25,25 @@ public class ConnexionListener extends BadListener {
 		BadblockPlayer badblockPlayer = (BadblockPlayer) e.getPlayer();
 
 
+		PlayerProfilesManager.getInstance().isOnline(badblockPlayer.getName(), new Callback<Boolean>() {
+
+			@Override
+			public void done(Boolean onlineMode, Throwable throwable) {
+				boolean bool = onlineMode.booleanValue();
+				if (bool) {
+					/*PlayerProfilesManager.getInstance().getAuthKey(badblockPlayer.getName(), new Callback<String>() {
+						@Override
+						public void done(String secretKey, Throwable throwable) {
+							if (secretKey != null && !secretKey.isEmpty()) {*/
+								AuthPlugin.getInstance().finishAuthentification(badblockPlayer);
+							/*}
+						}
+					});*/
+				}
+			}
+		});
 		badblockPlayer.sendTranslatedTitle("login.welcome", badblockPlayer.getName());
 		badblockPlayer.sendTimings(5, 200, 5);
-		
 		PlayerProfilesManager.getInstance().hasProfile(badblockPlayer.getName(), new Callback<Boolean>() {
 
 			boolean has = false;
