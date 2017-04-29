@@ -1,4 +1,4 @@
 name: BadblockAuth
-main: fr.badblock.auth.AuthPlugin
+main: fr.badblock.bukkit.auth.AuthPlugin
 version: 1.0.0
 authors: ['LeLanN']
