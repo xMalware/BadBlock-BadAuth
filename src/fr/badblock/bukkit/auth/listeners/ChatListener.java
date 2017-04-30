@@ -26,8 +26,7 @@ public class ChatListener extends BadListener {
 				try {
 					int temporaryCode = Integer.parseInt(e.getMessage());
 					String secretKey = authPlugin.semiAuthPlayers.get(uuid);
-					int correctTemporaryCode = gAuth.getTotpPassword(secretKey);
-					if (temporaryCode == correctTemporaryCode) {
+					if (gAuth.authorize(secretKey, temporaryCode)) {
 						player.sendTranslatedMessage("login.auth_success");
 						authPlugin.kickAuth(player, true);
 						return;
