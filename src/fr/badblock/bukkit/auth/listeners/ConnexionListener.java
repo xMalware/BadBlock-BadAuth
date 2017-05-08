@@ -49,20 +49,17 @@ public class ConnexionListener extends BadListener {
 		badblockPlayer.sendTimings(5, 200, 5);
 		PlayerProfilesManager.getInstance().hasProfile(badblockPlayer.getName(), new Callback<Boolean>() {
 
-			boolean has = false;
-			
 			@Override
 			public void done(Boolean result, Throwable error) {
-				if(has)
-					return;
-				has = true;
-				
-				if (!result) {
+				boolean bool = result.booleanValue();
+				System.out.println("PlayerName(" + badblockPlayer.getName() + ") / hasProfile(" + bool + ")");
+				if (!bool) {
 					PlayerProfilesManager.getInstance().canCreateAccount(badblockPlayer, new Callback<Boolean>() {
 
 						@Override
-						public void done(Boolean result, Throwable error) {
-							if (!result) {
+						public void done(Boolean result2, Throwable error) {
+							boolean bool2 = result2.booleanValue();
+							if (!bool2) {
 								Bukkit.getScheduler().runTask(AuthPlugin.getInstance(), new Runnable() {
 									@Override
 									public void run() {
