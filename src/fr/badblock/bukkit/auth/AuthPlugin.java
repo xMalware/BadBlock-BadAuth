@@ -70,7 +70,7 @@ public class AuthPlugin extends BadblockPlugin {
 		setLogged(player);
 		kick(player);
 	}
-
+	
 	public void kick(Player player){
 		new SendRunnable(player);
 	}
