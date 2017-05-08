@@ -11,7 +11,7 @@ public class Configuration {
 
 	public static int 		MAX_ACCOUNT 		= 2;
 	public static int		MIN_PASSWORD_SIZE   = 6;
-	public static int		MAX_TIME_OPEN		= 7200;
+	public static int		MAX_TIME_OPEN		= 3600;
 	
 	public static String	DATA_FOLDER			= new File("data").getAbsolutePath();
 

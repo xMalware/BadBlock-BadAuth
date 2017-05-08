@@ -107,12 +107,12 @@ public class ConnexionListener extends BadListener {
 				if (main.getServer().getOnlinePlayers().size() == 0) {
 					long maxTime = main.getStartTime() + (Configuration.MAX_TIME_OPEN * 1000L);
 					if (System.currentTimeMillis() >= maxTime) {
-						main.getServer().getConsoleSender().sendMessage("�b[AuthPlugin] I need to reboot NOW.");
+						main.getServer().getConsoleSender().sendMessage("§b[AuthPlugin] I need to reboot NOW.");
 						main.getServer().shutdown();
 					}
 				}
 			}
-		}, 1);
+		}, 20);
 	}
 
 }
