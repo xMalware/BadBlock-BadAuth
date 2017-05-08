@@ -32,14 +32,7 @@ public class ConnexionListener extends BadListener {
 					public void done(Boolean onlineMode, Throwable throwable) {
 						boolean bool = onlineMode.booleanValue();
 						if (bool) {
-							/*PlayerProfilesManager.getInstance().getAuthKey(badblockPlayer.getName(), new Callback<String>() {
-								@Override
-								public void done(String secretKey, Throwable throwable) {
-									if (secretKey != null && !secretKey.isEmpty()) {*/
-										AuthPlugin.getInstance().finishAuthentification(badblockPlayer);
-									/*}
-								}
-							});*/
+							AuthPlugin.getInstance().finishAuthentification(badblockPlayer);
 						}
 					}
 				});
@@ -49,8 +42,11 @@ public class ConnexionListener extends BadListener {
 		badblockPlayer.sendTimings(5, 200, 5);
 		PlayerProfilesManager.getInstance().hasProfile(badblockPlayer.getName(), new Callback<Boolean>() {
 
+			public boolean d;
+			
 			@Override
 			public void done(Boolean result, Throwable error) {
+				if (d) return;
 				boolean bool = result.booleanValue();
 				System.out.println("PlayerName(" + badblockPlayer.getName() + ") / hasProfile(" + bool + ")");
 				if (!bool) {
@@ -66,16 +62,28 @@ public class ConnexionListener extends BadListener {
 										badblockPlayer.kickPlayer( StringUtils.join( badblockPlayer.getTranslatedMessage("login.too_many_account"), "\n" ) );
 									}
 								});
+								d = true;
 							}else{
 								badblockPlayer.sendTranslatedMessage("login.register.message");
 								new DisconnectRunnable(e.getPlayer());
+								d = true;
 							}
 						}
 
 					});
 				}else{
-					badblockPlayer.sendTranslatedMessage("login.login.message");
-					new DisconnectRunnable(e.getPlayer());
+					PlayerProfilesManager.getInstance().getAuthKey(badblockPlayer.getName().toLowerCase(), new Callback<String>() {
+
+						@Override
+						public void done(String arg0, Throwable arg1) {
+							if (arg0 == null || arg0.isEmpty()) {
+								badblockPlayer.sendTranslatedMessage("login.login.message");
+								new DisconnectRunnable(e.getPlayer());
+							}
+						}
+						
+					});
+					d = true;
 				}
 			}
 
@@ -99,7 +107,7 @@ public class ConnexionListener extends BadListener {
 				if (main.getServer().getOnlinePlayers().size() == 0) {
 					long maxTime = main.getStartTime() + (Configuration.MAX_TIME_OPEN * 1000L);
 					if (System.currentTimeMillis() >= maxTime) {
-						main.getServer().getConsoleSender().sendMessage("§b[AuthPlugin] I need to reboot NOW.");
+						main.getServer().getConsoleSender().sendMessage("ï¿½b[AuthPlugin] I need to reboot NOW.");
 						main.getServer().shutdown();
 					}
 				}
