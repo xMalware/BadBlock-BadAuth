@@ -1,5 +1,7 @@
 package fr.badblock.bukkit.auth.listeners;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.event.EventHandler;
@@ -14,6 +16,40 @@ import fr.badblock.gameapi.players.BadblockPlayer;
 public class ChatListener extends BadListener {
 
 	public static GoogleAuthenticator gAuth = new GoogleAuthenticator();
+	public static Map<Character, Character> map = new HashMap<Character, Character>();
+
+	static
+	{
+		map.put('&', '1');
+		map.put('!', '1');
+
+		map.put('é', '2');
+		map.put('@', '2');
+		
+		map.put('"', '3');
+		map.put('#', '3');
+
+		map.put('\'', '4');
+		map.put('$', '4');
+
+		map.put('(', '5');
+		map.put('%', '5');
+
+		map.put('-', '6');
+		map.put('^', '6');
+
+		map.put('è', '7');
+		map.put('&', '7');
+
+		map.put('_', '8');
+		map.put('*', '8');
+
+		map.put('ç', '9');
+		map.put('(', '9');
+
+		map.put('à', '0');
+		map.put(')', '0');
+	}
 	
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent e) {
@@ -23,8 +59,18 @@ public class ChatListener extends BadListener {
 			AuthPlugin authPlugin = AuthPlugin.getInstance();
 			UUID uuid = player.getUniqueId();
 			if (authPlugin.semiAuthPlayers.containsKey(uuid)) {
+				String message = "";
+				
+				for(char c : e.getMessage().toCharArray())
+				{
+					if(Character.isDigit(c))
+						message += c;
+					else if(map.containsKey(c))
+						message = map.get(c).toString();
+				}
+				
 				try {
-					int temporaryCode = Integer.parseInt(e.getMessage());
+					int temporaryCode = Integer.parseInt( message );
 					String secretKey = authPlugin.semiAuthPlayers.get(uuid);
 					if (gAuth.authorize(secretKey, temporaryCode)) {
 						player.sendTranslatedMessage("login.auth_success");
