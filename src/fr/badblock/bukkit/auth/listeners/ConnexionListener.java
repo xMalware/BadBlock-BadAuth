@@ -40,6 +40,7 @@ public class ConnexionListener extends BadListener {
 						boolean bool = onlineMode.booleanValue();
 						if (bool) {
 							AuthPlugin.getInstance().finishAuthentification(badblockPlayer);
+							new DisconnectRunnable(e.getPlayer());
 						}
 					}
 				});
@@ -47,22 +48,28 @@ public class ConnexionListener extends BadListener {
 		}, 1);
 		badblockPlayer.sendTranslatedTitle("login.welcome", badblockPlayer.getName());
 		badblockPlayer.sendTimings(5, 200, 5);
+		System.out.println(badblockPlayer.getName() + " > A");
 		PlayerProfilesManager.getInstance().hasProfile(badblockPlayer.getName(), new Callback<Boolean>() {
 
 			public boolean d;
 			
 			@Override
 			public void done(Boolean result, Throwable error) {
+				System.out.println(badblockPlayer.getName() + " > B");
 				if (d) return;
+				System.out.println(badblockPlayer.getName() + " > C");
 				boolean bool = result.booleanValue();
 				System.out.println("PlayerName(" + badblockPlayer.getName() + ") / hasProfile(" + bool + ")");
 				if (!bool) {
+					System.out.println(badblockPlayer.getName() + " > C");
 					PlayerProfilesManager.getInstance().canCreateAccount(badblockPlayer, new Callback<Boolean>() {
 
 						@Override
 						public void done(Boolean result2, Throwable error) {
+							System.out.println(badblockPlayer.getName() + " > D");
 							boolean bool2 = result2.booleanValue();
 							if (!bool2) {
+								System.out.println(badblockPlayer.getName() + " > E");
 								Bukkit.getScheduler().runTask(AuthPlugin.getInstance(), new Runnable() {
 									@Override
 									public void run() {
@@ -71,6 +78,7 @@ public class ConnexionListener extends BadListener {
 								});
 								d = true;
 							}else{
+								System.out.println(badblockPlayer.getName() + " > F");
 								badblockPlayer.sendTranslatedMessage("login.register.message");
 								new DisconnectRunnable(e.getPlayer());
 								d = true;
@@ -79,11 +87,14 @@ public class ConnexionListener extends BadListener {
 
 					});
 				}else{
+					System.out.println(badblockPlayer.getName() + " > G");
 					PlayerProfilesManager.getInstance().getAuthKey(badblockPlayer.getName().toLowerCase(), new Callback<String>() {
 
 						@Override
 						public void done(String arg0, Throwable arg1) {
+							System.out.println(badblockPlayer.getName() + " > H");
 							if (arg0 == null || arg0.isEmpty()) {
+								System.out.println(badblockPlayer.getName() + " > I");
 								badblockPlayer.sendTranslatedMessage("login.login.message");
 								new DisconnectRunnable(e.getPlayer());
 							}
