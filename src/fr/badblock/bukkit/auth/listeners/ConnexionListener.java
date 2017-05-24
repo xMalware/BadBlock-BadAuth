@@ -11,12 +11,19 @@ import fr.badblock.bukkit.auth.Configuration;
 import fr.badblock.bukkit.auth.profile.PlayerProfilesManager;
 import fr.badblock.bukkit.auth.runnables.DisconnectRunnable;
 import fr.badblock.gameapi.BadListener;
+import fr.badblock.gameapi.events.api.PlayerLoadedEvent;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.utils.general.Callback;
 import fr.badblock.gameapi.utils.general.StringUtils;
 import fr.badblock.gameapi.utils.threading.TaskManager;
 
 public class ConnexionListener extends BadListener {
+	
+	@EventHandler
+	public void onLoaded(PlayerLoadedEvent event) {
+		event.getPlayer().teleport(Configuration.SPAWN);
+	}
+	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e){
 		e.setJoinMessage(null);
