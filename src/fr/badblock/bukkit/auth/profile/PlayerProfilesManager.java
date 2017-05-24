@@ -44,7 +44,7 @@ public class PlayerProfilesManager {
 	}
 
 	public void getProfile(String player, Callback<JsonObject> json) {
-		GameAPI.getAPI().getLadderDatabase().getPlayerData(player, json);
+		GameAPI.getAPI().getLadderDatabase().getPlayerData(player.toLowerCase(), json);
 	}
 
 	public void getPassword(String player, Callback<String> password) {

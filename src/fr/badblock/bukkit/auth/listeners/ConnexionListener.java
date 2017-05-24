@@ -49,7 +49,7 @@ public class ConnexionListener extends BadListener {
 		badblockPlayer.sendTranslatedTitle("login.welcome", badblockPlayer.getName());
 		badblockPlayer.sendTimings(5, 200, 5);
 		System.out.println(badblockPlayer.getName() + " > A");
-		PlayerProfilesManager.getInstance().hasProfile(badblockPlayer.getName(), new Callback<Boolean>() {
+		PlayerProfilesManager.getInstance().hasProfile(badblockPlayer.getName().toLowerCase(), new Callback<Boolean>() {
 
 			public boolean d;
 			
