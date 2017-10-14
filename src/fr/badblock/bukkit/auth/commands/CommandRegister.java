@@ -31,8 +31,8 @@ public class CommandRegister extends AbstractCommand {
 			player.sendTranslatedMessage("login.login.bad_password");
 			return true;
 		}
-
-		PlayerProfilesManager.getInstance().hasProfile(sender.getName(), new Callback<Boolean>() {
+		String realName = AuthPlugin.getInstance().getRealName(player);
+		PlayerProfilesManager.getInstance().hasProfile(realName, new Callback<Boolean>() {
 
 			@Override
 			public void done(Boolean result, Throwable error) {
@@ -55,7 +55,7 @@ public class CommandRegister extends AbstractCommand {
 							if (!result) {
 								player.sendTranslatedMessage("login.too_many_account");
 							} else{
-								PlayerProfilesManager.getInstance().savePlayer(sender.getName(), finalPassword);
+								PlayerProfilesManager.getInstance().savePlayer(realName, finalPassword);
 								AuthPlugin.getInstance().finishAuthentification(player);
 							}
 						}

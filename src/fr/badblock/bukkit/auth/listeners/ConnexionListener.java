@@ -10,6 +10,7 @@ import fr.badblock.bukkit.auth.AuthPlugin;
 import fr.badblock.bukkit.auth.Configuration;
 import fr.badblock.bukkit.auth.profile.PlayerProfilesManager;
 import fr.badblock.bukkit.auth.runnables.DisconnectRunnable;
+import fr.badblock.game.core18R3.players.GameBadblockPlayer;
 import fr.badblock.gameapi.BadListener;
 import fr.badblock.gameapi.events.api.PlayerLoadedEvent;
 import fr.badblock.gameapi.players.BadblockPlayer;
@@ -18,26 +19,28 @@ import fr.badblock.gameapi.utils.general.StringUtils;
 import fr.badblock.gameapi.utils.threading.TaskManager;
 
 public class ConnexionListener extends BadListener {
-	
+
 	@EventHandler
 	public void onLoaded(PlayerLoadedEvent event) {
 		event.getPlayer().teleport(Configuration.SPAWN);
 	}
-	
+
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e){
 		e.setJoinMessage(null);
 		e.getPlayer().teleport(Configuration.SPAWN);
 
-		BadblockPlayer badblockPlayer = (BadblockPlayer) e.getPlayer();
-		badblockPlayer.sendTranslatedTitle("login.welcome", badblockPlayer.getName());
+		GameBadblockPlayer badblockPlayer = (GameBadblockPlayer) e.getPlayer();
+		String realName = badblockPlayer.getRealName() != null ? badblockPlayer.getRealName() : badblockPlayer.getName();
+		String realLowerName = realName.toLowerCase();;
+		badblockPlayer.sendTranslatedTitle("login.welcome", realName);
 		badblockPlayer.sendTimings(5, 200, 5);
-		PlayerProfilesManager.getInstance().hasProfile(badblockPlayer.getName().toLowerCase(), new Callback<Boolean>() {
+		PlayerProfilesManager.getInstance().hasProfile(realLowerName, new Callback<Boolean>() {
 
 			@Override
 			public void done(Boolean result, Throwable error) {
 				boolean bool = result.booleanValue();
-				System.out.println("PlayerName(" + badblockPlayer.getName() + ") / hasProfile(" + bool + ")");
+				System.out.println("PlayerName(" + realName + ") / hasProfile(" + bool + ")");
 				if (!bool) {
 					TaskManager.runTaskLater(new Runnable() {
 						@Override
@@ -67,34 +70,34 @@ public class ConnexionListener extends BadListener {
 					TaskManager.runTaskLater(new Runnable() {
 						@Override
 						public void run() {
-								PlayerProfilesManager.getInstance().isOnline(badblockPlayer.getName(), new Callback<Boolean>() {
-									
-									@Override
-									public void done(Boolean onlineMode, Throwable throwable) {
-										boolean bool = onlineMode.booleanValue();
-										if (bool) {
-											AuthPlugin.getInstance().finishAuthentification(badblockPlayer);
-											new DisconnectRunnable(e.getPlayer());
-										}else{
-											TaskManager.runTaskLater(new Runnable() {
-												@Override
-												public void run() {
-													PlayerProfilesManager.getInstance().getAuthKey(badblockPlayer.getName().toLowerCase(), new Callback<String>() {
-					
-														@Override
-														public void done(String arg0, Throwable arg1) {
-															badblockPlayer.sendTranslatedMessage("login.login.message");
-															new DisconnectRunnable(e.getPlayer());
-														}
-														
-													});
-												}
-											}, 1);
-										}
+							PlayerProfilesManager.getInstance().isOnline(badblockPlayer.getName(), new Callback<Boolean>() {
+
+								@Override
+								public void done(Boolean onlineMode, Throwable throwable) {
+									boolean bool = onlineMode.booleanValue();
+									if (bool) {
+										AuthPlugin.getInstance().finishAuthentification(badblockPlayer);
+										new DisconnectRunnable(e.getPlayer());
+									}else{
+										TaskManager.runTaskLater(new Runnable() {
+											@Override
+											public void run() {
+												PlayerProfilesManager.getInstance().getAuthKey(realLowerName, new Callback<String>() {
+
+													@Override
+													public void done(String arg0, Throwable arg1) {
+														badblockPlayer.sendTranslatedMessage("login.login.message");
+														new DisconnectRunnable(e.getPlayer());
+													}
+
+												});
+											}
+										}, 1);
 									}
-								});
-							}
-						}, 1);
+								}
+							});
+						}
+					}, 1);
 				}
 			}
 

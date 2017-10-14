@@ -3,6 +3,7 @@ package fr.badblock.bukkit.auth.commands;
 import java.security.NoSuchAlgorithmException;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import fr.badblock.bukkit.auth.AuthPlugin;
 import fr.badblock.bukkit.auth.profile.PlayerProfilesManager;
@@ -31,8 +32,8 @@ public class CommandLogin extends AbstractCommand {
 			player.sendTranslatedMessage("login.login.already_logged");
 			return true;
 		}
-
-		PlayerProfilesManager.getInstance().hasProfile(sender.getName(), new Callback<Boolean>() {
+		String realName = AuthPlugin.getInstance().getRealName(player);
+		PlayerProfilesManager.getInstance().hasProfile(realName, new Callback<Boolean>() {
 
 			@Override
 			public void done(Boolean result, Throwable error) {
@@ -40,7 +41,7 @@ public class CommandLogin extends AbstractCommand {
 					player.sendTranslatedMessage("login.register.message");
 				} else{
 					try {
-						PlayerProfilesManager.getInstance().getPassword(sender.getName(), new Callback<String>() {
+						PlayerProfilesManager.getInstance().getPassword(realName, new Callback<String>() {
 
 							@Override
 							public void done(String result, Throwable error) {
@@ -69,7 +70,9 @@ public class CommandLogin extends AbstractCommand {
 
 	@Override
 	public void sendUsage(CommandSender sender) {
-		PlayerProfilesManager.getInstance().hasProfile(sender.getName(), new Callback<Boolean>() {
+		if (!(sender instanceof Player)) return;
+		String realName = AuthPlugin.getInstance().getRealName((BadblockPlayer) sender);
+		PlayerProfilesManager.getInstance().hasProfile(realName, new Callback<Boolean>() {
 
 			@Override
 			public void done(Boolean result, Throwable error) {

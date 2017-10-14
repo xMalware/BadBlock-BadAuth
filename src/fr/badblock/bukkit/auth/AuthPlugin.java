@@ -17,6 +17,7 @@ import fr.badblock.bukkit.auth.listeners.ProtectionListener;
 import fr.badblock.bukkit.auth.profile.PlayerProfilesManager;
 import fr.badblock.bukkit.auth.runnables.SendRunnable;
 import fr.badblock.bukkit.auth.security.XAUTH;
+import fr.badblock.game.core18R3.players.GameBadblockPlayer;
 import fr.badblock.gameapi.BadblockPlugin;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.run.RunType;
@@ -46,7 +47,7 @@ public class AuthPlugin extends BadblockPlugin {
 
 	public void finishAuthentification(BadblockPlayer player) {
 		if (semiAuthPlayers.containsKey(player.getUniqueId())) return;
-		PlayerProfilesManager.getInstance().getAuthKey(player.getName(), new Callback<String>() {
+		PlayerProfilesManager.getInstance().getAuthKey(getRealName(player), new Callback<String>() {
 
 			@Override
 			public void done(String string, Throwable throwable) {
@@ -74,11 +75,24 @@ public class AuthPlugin extends BadblockPlugin {
 	public void kick(Player player){
 		new SendRunnable(player);
 	}
+	
+	public String getRealName(BadblockPlayer player)
+	{
+		GameBadblockPlayer gbp = (GameBadblockPlayer) player;
+		if (gbp.getRealName() == null) return gbp.getName();
+		return gbp.getRealName();
+	}
+	
+	public String getLowerRealName(BadblockPlayer player)
+	{
+		return getRealName(player).toLowerCase();
+	}
 
 	@Override
 	public void onEnable(RunType runType){
 		instance	  	= this;
 
+		getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 		semiAuthPlayers = new HashMap<>();
 		loggedPlayers 	= new ArrayList<>();
 		hasher		  	= new XAUTH();
